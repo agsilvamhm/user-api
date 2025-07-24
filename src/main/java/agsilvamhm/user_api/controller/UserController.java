@@ -2,8 +2,7 @@ package agsilvamhm.user_api.controller;
 
 import agsilvamhm.user_api.dto.UserDto;
 import jakarta.annotation.PostConstruct;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,5 +48,22 @@ public class UserController {
     @GetMapping("/users")
     public List<UserDto> getUsuarios(){
         return usuarios;
+    }
+
+    @GetMapping("/users/{cpf}")
+    public UserDto getUsersFiltro(@PathVariable String cpf) {
+        for (UserDto userFilter: usuarios) {
+            if (userFilter.getCpf().equals(cpf)) {
+                return userFilter;
+            }
+        }
+        return null;
+    }
+
+    @PostMapping("/newUser")
+    UserDto inserir(@RequestBody UserDto userDTO) {
+        userDTO.setDataCadastro(new Date());
+        usuarios.add(userDTO);
+        return userDTO;
     }
 }
