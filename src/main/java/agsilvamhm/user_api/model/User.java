@@ -1,16 +1,32 @@
-package agsilvamhm.user_api.dto;
+package agsilvamhm.user_api.model;
 
-import agsilvamhm.user_api.model.User;
+import agsilvamhm.user_api.dto.UserDto;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.util.Date;
 
-public class UserDto {
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String nome;
     private String cpf;
     private String endereco;
     private String email;
     private String telefone;
     private Date dataCadastro;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -60,14 +76,14 @@ public class UserDto {
         this.dataCadastro = dataCadastro;
     }
 
-    public static UserDto convert(User user) {
-        UserDto userDTO = new UserDto();
-        userDTO.setNome(user.getNome());
-        userDTO.setEndereco(user.getEndereco());
-        userDTO.setCpf(user.getCpf());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setTelefone(user.getTelefone());
-        userDTO.setDataCadastro(user.getDataCadastro());
-        return userDTO;
+    public static User convert(UserDto userDto) {
+        User user = new User();
+        user.setNome(userDto.getNome());
+        user.setEndereco(userDto.getEndereco());
+        user.setCpf(userDto.getCpf());
+        user.setEmail(userDto.getEmail());
+        user.setTelefone(userDto.getTelefone());
+        user.setDataCadastro(userDto.getDataCadastro());
+        return user;
     }
 }
